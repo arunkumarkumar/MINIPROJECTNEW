@@ -4,31 +4,37 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class OnlineShooping {
+public class OnlineShooping extends Thread {
 	static Scanner s = new Scanner(System.in);
 	static ArrayList<String> arr = new ArrayList<String>();
 	static UsernamePass u = new UsernamePass();
-	static OnlineShooping shop= new OnlineShooping();
-	public static void main(String[] args) throws IOException {
-		shop.userPass();
-	}
-	public  void userPass() throws IOException {
+	static OnlineShooping shop = new OnlineShooping();
+public static void main(String[] args) throws IOException {
 		try {
-			FileInputStream fin = new FileInputStream("C:\\Users\\ARUN\\eclipse-workspace\\com.dt\\src\\com\\dt\\user.properties");
+		shop.userPass();
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+public void userPass() throws IOException {
+		try {
+			FileInputStream fin = new FileInputStream(
+					"C:\\Users\\ARUN\\eclipse-workspace\\com.dt\\src\\com\\dt\\user.properties");
 			Properties p = new Properties();
 			p.load(fin);
 			System.out.println("ENTER YOUR USERNAME");
 			u.setUserpass(s.nextLine());
 			if (p.containsKey(u.getUserpass())) {
 				System.out.println("ENTER YOUR PASSWORD");
-				 u.setPassword(s.nextLine());
+				u.setPassword(s.nextLine());
 				if (p.containsValue(u.getPassword())) {
 					System.out.println("HEY!  " + u.getUserpass());
 					shop.productCategory();
 				} else {
 					System.out.println("WRONG PASSWORD TRY AGAIN");
 					shop.userPass();
-					}
+				}
 			} else {
 				System.out.println("WRONG USERNAME TRY AGAIN");
 				shop.userPass();
@@ -37,9 +43,18 @@ public class OnlineShooping {
 			System.out.println(e);
 		}
 	}
-public  void productCategory() {
+
+	public void productCategory() {
 		try {
+			try{
+			Thread.sleep(3000);
 			System.out.println("------WELCOME TO E-SHOPPING------");
+			}
+			catch (Exception e) {
+				System.out.println(e);
+			}
+			try{
+				Thread.sleep(4000);
 			System.out.println("---THESE ALL ARE PRODUCT CATEGORIES---");
 			HashMap<Integer, String> km = new HashMap<Integer, String>();
 			km.put(1, "GROCERY");
@@ -49,6 +64,10 @@ public  void productCategory() {
 			km.put(5, "APPLIANCES");
 			for (Entry<Integer, String> string : km.entrySet()) {
 				System.out.println(string);
+			}
+			}
+			catch (Exception e) {
+				System.out.println(e);
 			}
 			Scanner sc = new Scanner(System.in);
 			System.out.println("WHICH PRODUCT CATEGORY YOU WANT TO CHOOSE ?");
@@ -78,8 +97,9 @@ public  void productCategory() {
 		}
 	}
 
-	public  void groceryList() {
+	public void groceryList() {
 		try {
+			System.out.println("--------------------------------------");
 			System.out.println("----GROCERY CATEGORIES----");
 			Deque<String> deque = new ArrayDeque<String>();
 			deque.add("GOLDWINNER");
@@ -93,12 +113,13 @@ public  void productCategory() {
 				System.out.println(string);
 			}
 			System.out.println("!!! CHOOSE OUR PRODUCT !!!");
-			String groc = s.next();
-			if (deque.contains(groc)) {
-				arr.add(groc);
+			u.setGroceryproduct(s.next());
+			if (deque.contains(u.getGroceryproduct())) {
+				arr.add(u.getGroceryproduct());
 				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
 				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println("!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+				System.out.println(
+						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
 				String cart = s.next();
 				if (cart.equalsIgnoreCase("yes")) {
 					shop.choiceCart();
@@ -123,8 +144,9 @@ public  void productCategory() {
 		}
 	}
 
-	public  void mobilesList() {
+	public void mobilesList() {
 		try {
+			System.out.println("--------------------------------------");
 			System.out.println("----MOBILES CATEGORIES----");
 			List<String> link = new LinkedList<String>();
 			link.add("REDMIA1");
@@ -143,12 +165,14 @@ public  void productCategory() {
 				arr.add(mobi);
 				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
 				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println("!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+				System.out.println(
+						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
 				String cart = s.next();
 				if (cart.equalsIgnoreCase("yes")) {
 					shop.choiceCart();
 				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println("!!! DO YU WANT TO CONTINUE IN MOBILES CATEGORY SHOOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
+					System.out.println(
+							"!!! DO YU WANT TO CONTINUE IN MOBILES CATEGORY SHOOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
 					String decis1 = s.next();
 					if (decis1.equalsIgnoreCase("yes")) {
 						shop.mobilesList();
@@ -167,6 +191,7 @@ public  void productCategory() {
 
 	public void fashionList() {
 		try {
+			System.out.println("--------------------------------------");
 			System.out.println("----MOBILES CATEGORIES----");
 			Set<String> set = new TreeSet<String>();
 			set.add("menswear");
@@ -186,8 +211,9 @@ public  void productCategory() {
 		}
 	}
 
-	public  void menList() {
+	public void menList() {
 		try {
+			System.out.println("--------------------------------------");
 			System.out.println("----MENSWEAR PRODUCTS----");
 			Set<String> hash = new HashSet<String>();
 			hash.add("TSHIRT");
@@ -209,7 +235,8 @@ public  void productCategory() {
 				if (cart.equalsIgnoreCase("yes")) {
 					shop.choiceCart();
 				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println("!!! DO YU WANT TO CONTINUE SHOOPING IN MENSWEAR PRODUCTS CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
+					System.out.println(
+							"!!! DO YU WANT TO CONTINUE SHOOPING IN MENSWEAR PRODUCTS CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
 					String decis1 = s.next();
 					if (decis1.equalsIgnoreCase("yes")) {
 						shop.menList();
@@ -227,8 +254,9 @@ public  void productCategory() {
 
 	}
 
-	public  void womenList() {
+	public void womenList() {
 		try {
+			System.out.println("--------------------------------------");
 			System.out.println("----WOMENWEAR PRODUCTS----");
 			Set<String> hash1 = new HashSet<String>();
 			hash1.add("SAREES");
@@ -244,12 +272,14 @@ public  void productCategory() {
 				arr.add(wear);
 				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
 				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println("!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+				System.out.println(
+						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
 				String cart = s.next();
 				if (cart.equalsIgnoreCase("yes")) {
 					shop.choiceCart();
 				} else if (cart.equalsIgnoreCase("no")) {
-            System.out.println("!!! DO YU WANT TO CONTINUE SHOOPING IN WOMENWEAR PRODUCTS CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
+					System.out.println(
+							"!!! DO YU WANT TO CONTINUE SHOOPING IN WOMENWEAR PRODUCTS CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
 					String decis1 = s.next();
 					if (decis1.equalsIgnoreCase("yes")) {
 						shop.womenList();
@@ -267,8 +297,9 @@ public  void productCategory() {
 
 	}
 
-	private  void electronicsList() {
+	private void electronicsList() {
 		try {
+			System.out.println("--------------------------------------");
 			System.out.println("----ELECTRONICS CATEGORIES----");
 			List<String> link1 = new LinkedList<String>();
 			link1.add("HEADPHONES");
@@ -287,7 +318,8 @@ public  void productCategory() {
 				arr.add(elec);
 				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
 				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println("!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+				System.out.println(
+						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
 				String cart = s.next();
 				if (cart.equalsIgnoreCase("yes")) {
 					shop.choiceCart();
@@ -306,14 +338,15 @@ public  void productCategory() {
 				shop.electronicsList();
 			}
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 	}
 
-	private  void applianceList() {
+	private void applianceList() {
 		try {
+			System.out.println("--------------------------------------");
 			System.out.println("----APPLIANCES CATEGORIES----");
 			List<String> link2 = new LinkedList<String>();
 			link2.add("TV");
@@ -331,12 +364,14 @@ public  void productCategory() {
 				arr.add(appl);
 				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
 				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println("!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES OR NO-->>FOR CONTINUE SHOPPING !!!");
+				System.out.println(
+						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES OR NO-->>FOR CONTINUE SHOPPING !!!");
 				String cart = s.next();
 				if (cart.equalsIgnoreCase("yes")) {
 					shop.choiceCart();
 				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println("!!! DO YU WANT TO CONTINUE IN APPLIANCES CATEGORY FOR SHOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
+					System.out.println(
+							"!!! DO YU WANT TO CONTINUE IN APPLIANCES CATEGORY FOR SHOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
 					String decis1 = s.next();
 					if (decis1.equalsIgnoreCase("yes")) {
 						shop.applianceList();
@@ -354,7 +389,7 @@ public  void productCategory() {
 
 	}
 
-	private  void choiceCart() {
+	private void choiceCart() {
 		System.out.println("press --1-- for show the cart product");
 		System.out.println("press --2-- remove the product from cart");
 		int choice = s.nextInt();
@@ -370,48 +405,55 @@ public  void productCategory() {
 
 	}
 
-	public  void showCart() {
-		try {
-		for (int i = 0; i < arr.size(); i++) {
-			System.out.println((i + 1) + ")-" + arr.get(i));
-		}
-		System.out.println(" IF YOU WANT REMOVE THE PRODUCT ENTER GO <<-- OR NO -->> FOR SEE THE CART");
-		String start = s.next();
-		if (start.equalsIgnoreCase("go")) {
-			shop.removeCart();
-		} else if (start.equalsIgnoreCase("no")) {
-			shop.choiceCart();
-		}
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-public  void removeCart() {
-		try {
-		Iterator<String> iterator = arr.iterator();
-		while (iterator.hasNext()) {
-			System.out.println(iterator.next());
-		}
-		System.out.println("WHICH PRODUCT YOU WANT TO REMOVE FROM THE CART");
-		String remve = s.next();
-		if (arr.contains(remve)) {
-			arr.remove(remve);
-			Iterator<String> iterator1 = arr.iterator();
-			while (iterator1.hasNext()) {
-				System.out.println(iterator1.next());
-			}
-		} else {
-			shop.showCart();
-		}
-	}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-	private void paymentWay() {
-		shop.groceryList();
+	public void showCart() {
 		
+			for (int i = 0; i < arr.size(); i++) {
+				System.out.println("---- YOUR PRODUCTS IN CART----");
+				System.out.println("--->>"+(i + 1) + ")-" + arr.get(i));
+			}
+			try {
+			Thread.sleep(5000);
+			System.out.println(" IF YOU WANT REMOVE THE PRODUCT ENTER GO <<-- OR NO -->> FOR SEE THE CART");
+			String start = s.next();
+			if (start.equalsIgnoreCase("go")) {
+				shop.removeCart();
+			} else if (start.equalsIgnoreCase("no")) {
+				shop.paymentWay();
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
-}
 
+	public void removeCart() {
+		try {
+			Iterator<String> iterator = arr.iterator();
+			while (iterator.hasNext()) {
+				System.out.println(iterator.next());
+			}
+			System.out.println("WHICH PRODUCT YOU WANT TO REMOVE FROM THE CART");
+			String remve = s.next();
+			if (arr.contains(remve)) {
+				arr.remove(remve);
+				Iterator<String> iterator1 = arr.iterator();
+				while (iterator1.hasNext()) {
+					System.out.println(iterator1.next());
+				}
+			} else {
+				System.out.println("ITS NOT IN THE CART");
+				shop.removeCart();
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void paymentWay() {
+		for (String string : arr) {
+			System.out.println(string);
+		}
+		System.out.println("payment sucessfully");
+		}
+
+	
+}
