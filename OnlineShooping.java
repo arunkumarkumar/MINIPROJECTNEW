@@ -1,459 +1,472 @@
-package com.dt;
+package com.java.Onlineshopping;
 
 import java.io.*;
 import java.util.*;
-import java.util.Map.Entry;
-
 public class OnlineShooping extends Thread {
-	static Scanner s = new Scanner(System.in);
-	static ArrayList<String> arr = new ArrayList<String>();
-	static UsernamePass u = new UsernamePass();
-	static OnlineShooping shop = new OnlineShooping();
-public static void main(String[] args) throws IOException {
-		try {
-		shop.userPass();
+		static Scanner s = new Scanner(System.in);
+		static Map<String,Integer> arr = new HashMap<String,Integer>();
+		static UsernamePass u = new UsernamePass();
+		static OnlineShooping shop = new OnlineShooping();
+		static int abc=0;
+	public static void main(String[] args) throws IOException {
+			try {
+			shop.userPass();
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
 		}
-		catch(Exception e) {
-			System.out.println(e);
-		}
-	}
-public void userPass() throws IOException {
-		try {
-			FileInputStream fin = new FileInputStream(
-					"C:\\Users\\ARUN\\eclipse-workspace\\com.dt\\src\\com\\dt\\user.properties");
-			Properties p = new Properties();
-			p.load(fin);
-			System.out.println("ENTER YOUR USERNAME");
-			u.setUserpass(s.nextLine());
-			if (p.containsKey(u.getUserpass())) {
-				System.out.println("ENTER YOUR PASSWORD");
-				u.setPassword(s.nextLine());
-				if (p.containsValue(u.getPassword())) {
-					System.out.println("HEY!  " + u.getUserpass());
-					shop.productCategory();
+	public void userPass() throws IOException {
+			try {
+				FileInputStream fin = new FileInputStream("C:\\Users\\User - 2\\eclipse-workspace\\com.java\\src\\com\\java\\Onlineshopping\\user.properties");
+				Properties p = new Properties();
+				p.load(fin);
+				System.out.println("ENTER YOUR USERNAME");
+				u.setUserpass(s.nextLine());
+				if (p.containsKey(u.getUserpass())) {
+					System.out.println("ENTER YOUR PASSWORD");
+					u.setPassword(s.nextLine());
+					if (p.containsValue(u.getPassword())) {
+						System.out.println("HEY!  " + u.getUserpass());
+						shop.productCategory();
+					} else {
+						System.out.println("WRONG PASSWORD TRY AGAIN");
+						shop.userPass();
+					}
 				} else {
-					System.out.println("WRONG PASSWORD TRY AGAIN");
+					System.out.println("WRONG USERNAME TRY AGAIN");
 					shop.userPass();
 				}
-			} else {
-				System.out.println("WRONG USERNAME TRY AGAIN");
-				shop.userPass();
+			} catch (Exception e) {
+				System.out.println(e);
 			}
-		} catch (Exception e) {
-			System.out.println(e);
 		}
-	}
+      public void productCategory() {
+			try {
+				try{
+				Thread.sleep(2000);
+				System.out.println("------WELCOME TO E-SHOPPING------");
+				}
+				catch (Exception e) {
+					System.out.println(e);
+				}
+				try{
+					Thread.sleep(2000);
+				System.out.println("---THESE ALL ARE PRODUCT CATEGORIES---");
+				List<String> km = new ArrayList<String>();
+				km.add("GROCERY");
+				km.add("MOBILES");
+				km.add("FASHION");
+				km.add("ELECTRONICS");
+				km.add("APPLIANCES");
+				for (String string : km) {
+					System.out.println(string);
+				}
+				}
+				catch (Exception e) {
+					System.out.println(e);
+				}
+				System.out.println("WHICH PRODUCT CATEGORY YOU WANT TO CHOOSE ?");
+				String product = s.next();
+				if (product.equalsIgnoreCase("Grocery")) {
+					System.out.println("----SO YOU CHOOSE->>>>" + product);
+					shop.groceryList();
+				} else if (product.equalsIgnoreCase("mobiles")) {
+					System.out.println("SO YOU CHOOSE   " + product);
+					shop.mobilesList();
+				} else if (product.equalsIgnoreCase("fashion")) {
+					System.out.println("SO YOU CHOOSE   " + product);
+					shop.fashionList();
+				} else if (product.equalsIgnoreCase("electronics")) {
+					System.out.println("SO YOU CHOOSE   " + product);
+					shop.electronicsList();
+				} else if (product.equalsIgnoreCase("appliances")) {
+					System.out.println("SO YOU CHOOSE   " + product);
+					shop.applianceList();
+				} else {
+					System.out.println(" ");
+					System.out.println("SOMETHING WRONG TRY AGAIN");
+					shop.productCategory();
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
 
-	public void productCategory() {
-		try {
-			try{
-			Thread.sleep(3000);
-			System.out.println("------WELCOME TO E-SHOPPING------");
-			}
-			catch (Exception e) {
+		public void groceryList() {
+			try {
+				System.out.println("--------------------------------------");
+				System.out.println("----GROCERY CATEGORIES----");
+				Map<String,Integer> de = new LinkedHashMap<String,Integer>();
+				de.put("GOLDWINNER",120);
+				de.put("HARPICPOWERPLUS",45);
+				de.put("ONION",80);
+				de.put("DETTOLHANDWASH",30);
+				de.put("TATATEA",60);
+				de.put("RAGIFLOUR",65);
+				de.put("CHOCOLATE",57);
+				for (Map.Entry<String,Integer> string : de.entrySet()) {
+					System.out.println("product- " +string.getKey()+   "-->" +"RS."+string.getValue());
+				}
+				System.out.println("!!! CHOOSE OUR PRODUCT !!!");
+				u.setGroceryproduct(s.next());
+				if (de.containsKey(u.getGroceryproduct())) {
+					arr.put(u.getGroceryproduct(),de.get(u.getGroceryproduct()));
+					System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY !!!");
+					System.out.println(arr.size() + " PRODUCTS IN THE CART");
+					System.out.println(
+							"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+					String cart = s.next();
+					if (cart.equalsIgnoreCase("yes")) {
+						shop.choiceCart();
+					} else if (cart.equalsIgnoreCase("no")) {
+						System.out.println(
+								"!!! DO YU WANT TO CONTINUE IN GROCERY CATEGORY CLICK<<--YES \n-->>NO FOR MAIN CATEGORY !!!");
+						String decis = s.next();
+						if (decis.equalsIgnoreCase("yes")) {
+							shop.groceryList();
+						} else if (decis.equalsIgnoreCase("no")) {
+							shop.productCategory();
+						}
+					}
+				}
+				else {
+					System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
+					shop.groceryList();
+				}
+			} catch (Exception e) {
 				System.out.println(e);
 			}
-			try{
-				Thread.sleep(4000);
-			System.out.println("---THESE ALL ARE PRODUCT CATEGORIES---");
-			HashMap<Integer, String> km = new HashMap<Integer, String>();
-			km.put(1, "GROCERY");
-			km.put(2, "MOBILES");
-			km.put(3, "FASHION");
-			km.put(4, "ELECTRONICS");
-			km.put(5, "APPLIANCES");
-			for (Entry<Integer, String> string : km.entrySet()) {
-				System.out.println(string);
-			}
-			}
-			catch (Exception e) {
+		}
+
+		public void mobilesList() {
+			try {
+				System.out.println("--------------------------------------");
+				System.out.println("----MOBILES CATEGORIES----");
+				Map<String,Integer> link = new HashMap<String,Integer>();
+				link.put("REDMIA1",15000);
+				link.put("GALAXYF13",13000);
+				link.put("MOTOROLA30",14000);
+				link.put("INFINIX11",10000);
+				link.put("REALME9",16000);
+				link.put("VIVO20",10000);
+				link.put("OPPO5G",17000);
+				for (Map.Entry<String,Integer> string : link.entrySet()) {
+					System.out.println("product- " +string.getKey()+   "-->" +"RS."+string.getValue());
+				}
+				System.out.println("!!! CHOOSE OUR PRODUCT !!!");
+			    u.setMobileproduct(s.next());
+				if (link.containsKey(u.getMobileproduct())) {
+					arr.put(u.getMobileproduct(),link.get(u.getMobileproduct()));
+					System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
+					System.out.println(arr.size() + " PRODUCTS IN THE CART");
+					System.out.println(
+							"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+					String cart = s.next();
+					if (cart.equalsIgnoreCase("yes")) {
+						shop.choiceCart();
+					} else if (cart.equalsIgnoreCase("no")) {
+						System.out.println(
+								"!!! DO YU WANT TO CONTINUE IN MOBILES CATEGORY SHOOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
+						String decis1 = s.next();
+						if (decis1.equalsIgnoreCase("yes")) {
+							shop.mobilesList();
+						} else if (decis1.equalsIgnoreCase("no")) {
+							shop.productCategory();
+						}
+					}
+				} else {
+					System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
+					shop.mobilesList();
+				}
+			} catch (Exception e) {
 				System.out.println(e);
 			}
-			Scanner sc = new Scanner(System.in);
-			System.out.println("WHICH PRODUCT CATEGORY YOU WANT TO CHOOSE ?");
-			String product = sc.next();
-			if (product.equalsIgnoreCase("Grocery")) {
-				System.out.println("----SO YOU CHOOSE->>>>" + product);
-				shop.groceryList();
-			} else if (product.equalsIgnoreCase("mobiles")) {
-				System.out.println("SO YOU CHOOSE   " + product);
-				shop.mobilesList();
-			} else if (product.equalsIgnoreCase("fashion")) {
-				System.out.println("SO YOU CHOOSE   " + product);
-				shop.fashionList();
-			} else if (product.equalsIgnoreCase("electronics")) {
-				System.out.println("SO YOU CHOOSE   " + product);
-				shop.electronicsList();
-			} else if (product.equalsIgnoreCase("appliances")) {
-				System.out.println("SO YOU CHOOSE   " + product);
-				shop.applianceList();
-			} else {
-				System.out.println(" ");
-				System.out.println("SOMETHING WRONG TRY AGAIN");
+		}
+
+		public void fashionList() {
+			try {
+				System.out.println("--------------------------------------");
+				System.out.println("----MOBILES CATEGORIES----");
+				Set<String> set = new TreeSet<String>();
+				set.add("menswear");
+				set.add("womenwear");
+				for (String string : set) {
+					System.out.println(string);
+				}
+				System.out.println("!!! CHOOSE YOUR  WEAR !!!");
+				String fash = s.next();
+				if (fash.equalsIgnoreCase("menswear")) {
+					shop.menList();
+				} else if (fash.equalsIgnoreCase("womenwear")) {
+					shop.womenList();
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+
+		public void menList() {
+			try {
+				System.out.println("--------------------------------------");
+				System.out.println("----MENSWEAR PRODUCTS----");
+				Map<String,Integer> hash = new HashMap<String,Integer>();
+				hash.put("TSHIRT",400);
+				hash.put("PANT",500);
+				hash.put("JEANS",300);
+				hash.put("SHOES",200);
+				for (Map.Entry<String,Integer> string : hash.entrySet()) {
+					System.out.println("product- " +string.getKey()+   "--> " +"RS."+string.getValue());
+				}
+				System.out.println("!!! CHOOSE YOUR PRODUCT WEAR !!!");
+				u.setMenproduct(s.next());
+				if (hash.containsKey(u.getMenproduct())) {
+					arr.put(u.getMenproduct(),hash.get(u.getMenproduct()));
+					System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
+					System.out.println(arr.size() + " PRODUCTS IN THE CART");
+					System.out.println(
+							"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES OR NO-->>FOR CONTINUE SHOPPING !!!");
+					String cart = s.next();
+					if (cart.equalsIgnoreCase("yes")) {
+						shop.choiceCart();
+					} else if (cart.equalsIgnoreCase("no")) {
+						System.out.println(
+								"!!! DO YU WANT TO CONTINUE SHOOPING IN MENSWEAR PRODUCTS CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
+						String decis1 = s.next();
+						if (decis1.equalsIgnoreCase("yes")) {
+							shop.menList();
+						} else if (decis1.equalsIgnoreCase("no")) {
+							shop.productCategory();
+						}
+					}
+				} else {
+					System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
+					shop.fashionList();
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+		}
+
+		public void womenList() {
+			try {
+				System.out.println("--------------------------------------");
+				System.out.println("----WOMENWEAR PRODUCTS----");
+				Map<String,Integer> hash1 = new HashMap<String,Integer>();
+				hash1.put("SAREES",2000);
+				hash1.put("LEGGINGS",250);
+				hash1.put("HEELS",600);
+				hash1.put("GOWNS",300);
+				for (Map.Entry<String,Integer> string : hash1.entrySet()) {
+					System.out.println("product- " +string.getKey()+   " --> " +"RS."+string.getValue());
+				}
+				System.out.println("!!! CHOOSE YOUR PRODUCT WEAR !!!");
+				u.setWomenprdoct(s.next());
+				if (hash1.containsKey(u.getMenproduct())) {
+					arr.put(u.getWomenprdoct(),hash1.get(u.getWomenprdoct()));
+					System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
+					System.out.println(arr.size() + " PRODUCTS IN THE CART");
+					System.out.println(
+							"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+					String cart = s.next();
+					if (cart.equalsIgnoreCase("yes")) {
+						shop.choiceCart();
+					} else if (cart.equalsIgnoreCase("no")) {
+						System.out.println(
+								"!!! DO YU WANT TO CONTINUE SHOOPING IN WOMENWEAR PRODUCTS CLICK<<--YES \n NO-->>FOR MAIN CATEGORY !!!");
+						String decis1 = s.next();
+						if (decis1.equalsIgnoreCase("yes")) {
+							shop.womenList();
+						} else if (decis1.equalsIgnoreCase("no")) {
+							shop.productCategory();
+						}
+					}
+				} else {
+					System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
+					shop.womenList();
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+		}
+
+		private void electronicsList() {
+			try {
+				System.out.println("--------------------------------------");
+				System.out.println("----ELECTRONICS CATEGORIES----");
+				Map<String,Integer> link1 = new HashMap<String,Integer>();
+				link1.put("HEADPHONES",500);
+				link1.put("SPEAKERS",800);
+				link1.put("SOUNDBAR",2000);
+				link1.put("POWERBANK",1000);
+				link1.put("PRINTER",7000);
+				link1.put("CONSOLE",12000);
+				for (Map.Entry<String,Integer> string : link1.entrySet()) {
+					System.out.println("product- " +string.getKey()+   " --> " +"RS."+string.getValue());
+				}
+				System.out.println("!!! CHOOSE OUR PRODUCT !!!");
+				u.setElectroniprodu(s.next     ());
+				if (link1.containsKey(u.getElectroniprodu())) {
+					arr.put(u.getElectroniprodu(),link1.get(u.getElectroniprodu()));
+					System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
+					System.out.println(arr.size() + " PRODUCTS IN THE CART");
+					System.out.println(
+							"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+					String cart = s.next();
+					if (cart.equalsIgnoreCase("yes")) {
+						shop.choiceCart();
+					} else if (cart.equalsIgnoreCase("no")) {
+						System.out.println(
+								"!!! DO YU WANT TO CONTINUE IN ELECTRONICS CATEGORY SHOOPING CLICK<<--YES \n NO-->>FOR MAIN CATEGORY !!!");
+						String decis1 = s.next();
+						if (decis1.equalsIgnoreCase("yes")) {
+							shop.electronicsList();
+						} else if (decis1.equalsIgnoreCase("no")) {
+							shop.productCategory();
+						}
+					}
+				} 
+				else {
+					System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
+					shop.electronicsList();
+				}
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+		}
+     private void applianceList() {
+			try {
+				System.out.println("--------------------------------------");
+				System.out.println("----APPLIANCES CATEGORIES----");
+				Map<String,Integer> link2 = new LinkedHashMap<String,Integer>();
+				link2.put("TV",20000);
+				link2.put("WASHINGMACHINE",10000);
+				link2.put("AC",15000);
+				link2.put("FANS",1000);
+				link2.put("FRIDGE",15000);
+				link2.put("HEATER",8000);
+				for (Map.Entry<String,Integer> string : link2.entrySet()) {
+					System.out.println("product- " +string.getKey()+   " --> " +"RS."+string.getValue());
+				}
+				System.out.println("!!! CHOOSE OUR PRODUCT !!!");
+				u.setApplianproduct(s.next());
+				if (link2.containsKey(u.getApplianproduct())) {
+					arr.put(u.getApplianproduct(),link2.get(u.getApplianproduct()));
+					System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
+					System.out.println(arr.size() + " PRODUCTS IN THE CART");
+					System.out.println(
+							"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
+					String cart = s.next();
+					if (cart.equalsIgnoreCase("yes")) {
+						shop.choiceCart();
+					} else if (cart.equalsIgnoreCase("no")) {
+						System.out.println(
+								"!!! DO YU WANT TO CONTINUE IN APPLIANCES CATEGORY FOR SHOPING CLICK<<--YES \n NO-->>FOR MAIN CATEGORY !!!");
+						String decis1 = s.next();
+						if (decis1.equalsIgnoreCase("yes")) {
+							shop.applianceList();
+						} else if (decis1.equalsIgnoreCase("no")) {
+							shop.productCategory();
+						}
+					}
+				} else {
+					System.out.println("!!! WRONG PRODUCT TRY AGAIN!!!");
+					shop.applianceList();
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+		}
+
+		private void choiceCart() {
+			try {
+			System.out.println("--------------------------------------");
+			System.out.println("press --1-- for show the cart product");
+			System.out.println("press --2-- remove the product from cart");
+			System.out.println("press --3-- for payment gateway");
+			System.out.println("press --4-- for continue shopping");
+			int choice = s.nextInt();
+			switch (choice) {
+			case 1: {
+				shop.showCart();
+				break;
+			}
+			case 2: {
+				shop.removeCart();
+				break;
+			}
+			case 3:{
+				shop.paymentWay();
+				break;
+			}
+			case 4:{
 				shop.productCategory();
 			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
 
-	public void groceryList() {
-		try {
-			System.out.println("--------------------------------------");
-			System.out.println("----GROCERY CATEGORIES----");
-			Deque<String> deque = new ArrayDeque<String>();
-			deque.add("GOLDWINNER");
-			deque.add("HARPICPOWERPLUS");
-			deque.add("ONION");
-			deque.add("DETTOLHANDWASH");
-			deque.add("TATATEA");
-			deque.add("RAGIFLOUR");
-			deque.add("CHOCOLATE");
-			for (String string : deque) {
-				System.out.println(string);
 			}
-			System.out.println("!!! CHOOSE OUR PRODUCT !!!");
-			u.setGroceryproduct(s.next());
-			if (deque.contains(u.getGroceryproduct())) {
-				arr.add(u.getGroceryproduct());
-				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
-				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println(
-						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
-				String cart = s.next();
-				if (cart.equalsIgnoreCase("yes")) {
-					shop.choiceCart();
-				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println(
-							"!!! DO YU WANT TO CONTINUE IN GROCERY CATEGORY CLICK<<--YES OR-->>NO FOR MAIN CATEGORY !!!");
-					String decis = s.next();
-					if (decis.equalsIgnoreCase("yes")) {
-						shop.groceryList();
-					} else if (decis.equalsIgnoreCase("no")) {
-						shop.productCategory();
-					}
-				}
+			}catch (Exception e) {
+				System.out.println(e);
 			}
 
-			else {
-				System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
-				shop.groceryList();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	public void mobilesList() {
-		try {
-			System.out.println("--------------------------------------");
-			System.out.println("----MOBILES CATEGORIES----");
-			List<String> link = new LinkedList<String>();
-			link.add("REDMIA1");
-			link.add("GALAXYF13");
-			link.add("MOTOROLA30");
-			link.add("INFINIX11");
-			link.add("REALME9");
-			link.add("VIVO20");
-			link.add("OPPO5G");
-			for (String string : link) {
-				System.out.println(string);
-			}
-			System.out.println("!!! CHOOSE OUR PRODUCT !!!");
-			String mobi = s.next();
-			if (link.contains(mobi)) {
-				arr.add(mobi);
-				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
-				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println(
-						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
-				String cart = s.next();
-				if (cart.equalsIgnoreCase("yes")) {
-					shop.choiceCart();
-				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println(
-							"!!! DO YU WANT TO CONTINUE IN MOBILES CATEGORY SHOOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
-					String decis1 = s.next();
-					if (decis1.equalsIgnoreCase("yes")) {
-						shop.mobilesList();
-					} else if (decis1.equalsIgnoreCase("no")) {
-						shop.productCategory();
-					}
-				}
-			} else {
-				System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
-				shop.mobilesList();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	public void fashionList() {
-		try {
-			System.out.println("--------------------------------------");
-			System.out.println("----MOBILES CATEGORIES----");
-			Set<String> set = new TreeSet<String>();
-			set.add("menswear");
-			set.add("womenwear");
-			for (String string : set) {
-				System.out.println(string);
-			}
-			System.out.println("!!! CHOOSE YOUR PRODUCT WEAR !!!");
-			String fash = s.next();
-			if (fash.equalsIgnoreCase("menswear")) {
-				shop.menList();
-			} else if (fash.equalsIgnoreCase("womenwear")) {
-				shop.womenList();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	public void menList() {
-		try {
-			System.out.println("--------------------------------------");
-			System.out.println("----MENSWEAR PRODUCTS----");
-			Set<String> hash = new HashSet<String>();
-			hash.add("TSHIRT");
-			hash.add("PANT");
-			hash.add("JEANS");
-			hash.add("SHOES");
-			for (String string : hash) {
-				System.out.println(string);
-			}
-			System.out.println("!!! CHOOSE YOUR PRODUCT WEAR !!!");
-			String mobi = s.next();
-			if (hash.contains(mobi)) {
-				arr.add(mobi);
-				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
-				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println(
-						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES OR NO-->>FOR CONTINUE SHOPPING !!!");
-				String cart = s.next();
-				if (cart.equalsIgnoreCase("yes")) {
-					shop.choiceCart();
-				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println(
-							"!!! DO YU WANT TO CONTINUE SHOOPING IN MENSWEAR PRODUCTS CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
-					String decis1 = s.next();
-					if (decis1.equalsIgnoreCase("yes")) {
-						shop.menList();
-					} else if (decis1.equalsIgnoreCase("no")) {
-						shop.productCategory();
-					}
-				}
-			} else {
-				System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
-				shop.menList();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-	}
-
-	public void womenList() {
-		try {
-			System.out.println("--------------------------------------");
-			System.out.println("----WOMENWEAR PRODUCTS----");
-			Set<String> hash1 = new HashSet<String>();
-			hash1.add("SAREES");
-			hash1.add("LEGGINGS");
-			hash1.add("HEELS");
-			hash1.add("GOWNS");
-			for (String string : hash1) {
-				System.out.println(string);
-			}
-			System.out.println("!!! CHOOSE YOUR PRODUCT WEAR !!!");
-			String wear = s.next();
-			if (hash1.contains(wear)) {
-				arr.add(wear);
-				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
-				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println(
-						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
-				String cart = s.next();
-				if (cart.equalsIgnoreCase("yes")) {
-					shop.choiceCart();
-				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println(
-							"!!! DO YU WANT TO CONTINUE SHOOPING IN WOMENWEAR PRODUCTS CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
-					String decis1 = s.next();
-					if (decis1.equalsIgnoreCase("yes")) {
-						shop.womenList();
-					} else if (decis1.equalsIgnoreCase("no")) {
-						shop.productCategory();
-					}
-				}
-			} else {
-				System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
-				shop.womenList();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-	}
-
-	private void electronicsList() {
-		try {
-			System.out.println("--------------------------------------");
-			System.out.println("----ELECTRONICS CATEGORIES----");
-			List<String> link1 = new LinkedList<String>();
-			link1.add("HEADPHONES");
-			link1.add("SPEAKERS");
-			link1.add("SOUNDBAR");
-			link1.add("POWERBANK");
-			link1.add("PRINTER");
-			link1.add("CONSOLE");
-			link1.add("OPPO5G");
-			for (String string : link1) {
-				System.out.println(string);
-			}
-			System.out.println("!!! CHOOSE OUR PRODUCT !!!");
-			String elec = s.next();
-			if (link1.contains(elec)) {
-				arr.add(elec);
-				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
-				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println(
-						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES \n NO-->>FOR CONTINUE SHOPPING !!!");
-				String cart = s.next();
-				if (cart.equalsIgnoreCase("yes")) {
-					shop.choiceCart();
-				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println(
-							"!!! DO YU WANT TO CONTINUE IN ELECTRONICS CATEGORY SHOOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
-					String decis1 = s.next();
-					if (decis1.equalsIgnoreCase("yes")) {
-						shop.electronicsList();
-					} else if (decis1.equalsIgnoreCase("no")) {
-						shop.productCategory();
-					}
-				}
-			} else {
-				System.out.println("!!! WRONG PRODUCT TRY AGAIN !!!");
-				shop.electronicsList();
-			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-	}
-
-	private void applianceList() {
-		try {
-			System.out.println("--------------------------------------");
-			System.out.println("----APPLIANCES CATEGORIES----");
-			List<String> link2 = new LinkedList<String>();
-			link2.add("TV");
-			link2.add("WASHINGMACHINE");
-			link2.add("AC");
-			link2.add("FANS");
-			link2.add("FRIDGE");
-			link2.add("HEATER");
-			for (String string : link2) {
-				System.out.println(string);
-			}
-			System.out.println("!!! CHOOSE OUR PRODUCT !!!");
-			String appl = s.next();
-			if (link2.contains(appl)) {
-				arr.add(appl);
-				System.out.println("!!! PRODUCT ADD TO CART SUCESSFULLY");
-				System.out.println(arr.size() + " PRODUCTS IN THE CART");
-				System.out.println(
-						"!!! DO YOU WANT TO SEE THE PRODUCT IN CART CLICK<<--YES OR NO-->>FOR CONTINUE SHOPPING !!!");
-				String cart = s.next();
-				if (cart.equalsIgnoreCase("yes")) {
-					shop.choiceCart();
-				} else if (cart.equalsIgnoreCase("no")) {
-					System.out.println(
-							"!!! DO YU WANT TO CONTINUE IN APPLIANCES CATEGORY FOR SHOPING CLICK<<--YES OR NO-->>FOR MAIN CATEGORY !!!");
-					String decis1 = s.next();
-					if (decis1.equalsIgnoreCase("yes")) {
-						shop.applianceList();
-					} else if (decis1.equalsIgnoreCase("no")) {
-						shop.productCategory();
-					}
-				}
-			} else {
-				System.out.println("!!! WRONG PRODUCT TRY AGAIN!!!");
-				shop.applianceList();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-	}
-
-	private void choiceCart() {
-		System.out.println("press --1-- for show the cart product");
-		System.out.println("press --2-- remove the product from cart");
-		int choice = s.nextInt();
-		switch (choice) {
-		case 1: {
-			shop.showCart();
-		}
-		case 2: {
-			shop.removeCart();
-		}
-
-		}
-
-	}
-
-	public void showCart() {
-		
-			for (int i = 0; i < arr.size(); i++) {
-				System.out.println("---- YOUR PRODUCTS IN CART----");
-				System.out.println("--->>"+(i + 1) + ")-" + arr.get(i));
-			}
+		}public void showCart() {
 			try {
-			Thread.sleep(5000);
-			System.out.println(" IF YOU WANT REMOVE THE PRODUCT ENTER GO <<-- OR NO -->> FOR SEE THE CART");
-			String start = s.next();
-			if (start.equalsIgnoreCase("go")) {
-				shop.removeCart();
-			} else if (start.equalsIgnoreCase("no")) {
-				shop.paymentWay();
+			for (Map.Entry<String,Integer> string : arr.entrySet()) {
+				System.out.println("product- " +string.getKey()+   " price- " +"RS."+string.getValue());
 			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	public void removeCart() {
-		try {
-			Iterator<String> iterator = arr.iterator();
-			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
-			}
-			System.out.println("WHICH PRODUCT YOU WANT TO REMOVE FROM THE CART");
-			String remve = s.next();
-			if (arr.contains(remve)) {
-				arr.remove(remve);
-				Iterator<String> iterator1 = arr.iterator();
-				while (iterator1.hasNext()) {
-					System.out.println(iterator1.next());
+				try {
+				Thread.sleep(2000);
+				System.out.println("IF YOU WANT REMOVE THE PRODUCT CLICK <<--YES \n NO-->> FOR THE OTHER MODIFICATION ");
+				String start = s.next();
+				if (start.equalsIgnoreCase("yes")) {
+					shop.removeCart();
 				}
-			} else {
-				System.out.println("ITS NOT IN THE CART");
-				shop.removeCart();
+				else if(start.equalsIgnoreCase("no")) {
+					shop.choiceCart();
+				}
+			} catch (Exception e) {
+				System.out.println(e);
 			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	private void paymentWay() {
-		for (String string : arr) {
-			System.out.println(string);
-		}
-		System.out.println("payment sucessfully");
+			}catch (Exception e) {
+				System.out.println(e);
+			}
+			
 		}
 
-	
+		public void removeCart() {
+			try {
+				for (Map.Entry<String,Integer> string : arr.entrySet()) {
+					System.out.println("product- " +string.getKey()+   " price- " +"RS."+string.getValue());
+				}
+				System.out.println("WHICH PRODUCT YOU WANT TO REMOVE FROM THE CART ?");
+				String remve = s.next();
+				if (arr.containsKey(remve)) {
+					arr.remove(remve);
+					System.out.println("YOUR PRODUCT IS REMOVED....");
+					shop.choiceCart();
+				} else {
+					System.out.println("ITS NOT IN THE CART,TRY AGAIN");
+					shop.removeCart();
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+
+		public void paymentWay() {
+			try {
+			for (Map.Entry<String,Integer> string : arr.entrySet()) {
+				System.out.println("product- " +string.getKey()+   " price- " +"RS."+string.getValue());
+				abc=abc+string.getValue();
+			}
+			System.out.println("YOUR FINAL AMOUNT FOR ABOVE PRODUCTS "+abc);
+			}catch (Exception e) {
+				System.out.println(e);
+			}
+		}
 }
